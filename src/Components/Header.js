@@ -1,9 +1,4 @@
-import { useState } from "react"
-
 const Header = () => {
-    const [isSignIn, setIsSignIn] = useState(true);
-
-    const toggleIsSignUp = () => setIsSignIn(!isSignIn);
 
     return (
         <>
@@ -13,38 +8,9 @@ const Header = () => {
                 </div>
             </div>
 
-            <div className="absolute z-10 mt-28 flex justify-center w-full">
-                <form className="bg-black bg-opacity-75 px-16 py-12 w-[35%]">
-                    <p className="text-white text-3xl font-bold mb-8"> Sign
-                        {isSignIn ? ' In' : ' Up'}
-                    </p>
-
-                    {
-                        !isSignIn && <input type="name" placeholder="Full Name" className="w-full flex justify-center bg-transparent border border-white p-4 rounded-md text-white mb-6" />
-                    }
-
-                    <input type="email" placeholder="Email or mobile number" className="w-full flex justify-center bg-transparent border border-white p-4 rounded-md text-white" />
-
-                    <input type="password" placeholder="Password" className="w-full flex justify-center bg-transparent border border-white p-4 rounded-md mt-6 text-white" />
-
-                    <button className="w-full flex justify-center bg-red-600 text-white mt-5 p-2 rounded">Sign {isSignIn ? ' In' : ' Up'}</button>
-                    <p className="mt-8">
-                        {
-                            isSignIn ? (
-                                <>
-                                    <span className="text-gray-500">New to Netflix?</span>
-                                    <span className="font-bold text-white cursor-pointer" onClick={toggleIsSignUp}> Sign up now.</span>
-                                </>
-                            ) : (
-                                <>
-                                    <span className="text-gray-500">Already registered? </span>
-                                    <span className="font-bold text-white cursor-pointer" onClick={toggleIsSignUp}>Sign in now.</span>
-                                </>
-                            )
-                        }
-
-                    </p>
-                </form>
+            <div>
+                <div className="fixed w-full h-full left-0 top-0 right-0 bottom-0 bg-black opacity-40"></div>
+                <img src={"https://assets.nflxext.com/ffe/siteui/vlv3/21a8ba09-4a61-44f8-8e2e-70e949c00c6f/6678e2ea-85e8-4db2-b440-c36547313109/IN-en-20240722-POP_SIGNUP_TWO_WEEKS-perspective_WEB_3457a8b1-284d-4bb5-979e-2a2e9bb342b3_large.jpg"} alt="" />
             </div>
         </>
     )

@@ -1,12 +1,63 @@
+import { checkValidData } from "../utils/Validate";
 import Header from "./Header";
+import { useRef, useState } from "react";
 
 const Login = () => {
+    const [isSignIn, setIsSignIn] = useState(true);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const toggleIsSignUp = () => setIsSignIn(!isSignIn);
+    
+    const email = useRef(null);
+    const password = useRef(null);
+
+    const handleButtonClick = (e) => {
+        //TODO Validate the form data
+        const message = checkValidData(email.current.value, password.current.value);
+        setErrorMessage(message);
+    }
+
     return (
         <div>
             <Header />
-            <div>
-                <div className="fixed w-full h-full left-0 top-0 right-0 bottom-0 bg-black opacity-50"></div>
-                <img src={"https://assets.nflxext.com/ffe/siteui/vlv3/655a9668-b002-4262-8afb-cf71e45d1956/5ff265b6-3037-44b2-b071-e81750b21783/IN-en-20240715-POP_SIGNUP_TWO_WEEKS-perspective_WEB_c6d6616f-4478-4ac2-bdac-f54b444771dd_large.jpg"} alt="" />
+
+            <div className="absolute top-0 mt-28 flex justify-center w-full">
+                <form onSubmit={ (e) => e.preventDefault() } className="bg-black bg-opacity-70 px-16 py-12 w-[35%]">
+                    <p className="text-white text-3xl font-bold mb-8"> Sign
+                        {isSignIn ? ' In' : ' Up'}
+                    </p>
+
+                    {
+                        !isSignIn && <input type="name" placeholder="Full Name" className="w-full flex justify-center bg-transparent border border-white p-4 rounded-md text-white mb-6" />
+                    }
+
+                    <input type="email" ref = { email } placeholder="Email or mobile number" className="w-full flex justify-center bg-transparent border border-white p-4 rounded-md text-white" />
+
+                    <input type="password" ref = { password } placeholder="Password" className="w-full flex justify-center bg-transparent border border-white p-4 rounded-md mt-6 text-white" />
+
+                    {
+                        (errorMessage != null) ? (
+                            <p className="text-red-500 mt-2">{ errorMessage }</p>
+                        ) : ('')
+                    }
+
+                    <button className="w-full flex justify-center bg-red-600 text-white mt-5 p-2 rounded" onClick = { handleButtonClick }>Sign {isSignIn ? ' In' : ' Up'}</button>
+                    <p className="mt-8">
+                        {
+                            isSignIn ? (
+                                <>
+                                    <span className="text-gray-500">New to Netflix?</span>
+                                    <span className="font-bold text-white cursor-pointer" onClick={toggleIsSignUp}> Sign up now.</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="text-gray-500">Already registered? </span>
+                                    <span className="font-bold text-white cursor-pointer" onClick={toggleIsSignUp}>Sign in now.</span>
+                                </>
+                            )
+                        }
+
+                    </p>
+                </form>
             </div>
         </div>
     )
