@@ -14,6 +14,8 @@
     - Sign up Form
     - Form Validation
     - useRef Hook
+    - Firebase Setup
+    - Deploying your app
     - Main Movie
         - Trailer in the background
         - Title & Description
