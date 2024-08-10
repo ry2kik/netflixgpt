@@ -15,7 +15,9 @@
     - Form Validation
     - useRef Hook
     - Firebase Setup
-    - Deploying your app
+    - Deploying your app to the production
+    - Create Sign-up user in firebase
+    
     - Main Movie
         - Trailer in the background
         - Title & Description

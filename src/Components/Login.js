@@ -1,19 +1,53 @@
 import { checkValidData } from "../utils/Validate";
 import Header from "./Header";
 import { useRef, useState } from "react";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/Firebase";
 
 const Login = () => {
     const [isSignIn, setIsSignIn] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null);
     const toggleIsSignUp = () => setIsSignIn(!isSignIn);
     
+    const name = useRef(null);
     const email = useRef(null);
     const password = useRef(null);
 
-    const handleButtonClick = (e) => {
+    const handleButtonClick = () => {
         //TODO Validate the form data
         const message = checkValidData(email.current.value, password.current.value);
         setErrorMessage(message);
+        if(errorMessage != null) return;
+
+        // TODO Sign up / sign in Logic
+        if (!isSignIn) {
+            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then(userCredential => {
+                    const user = userCredential.user;
+                    console.log(user);
+                })
+                .catch(error => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessage(errorCode + errorMessage);
+                    console.log(errorCode + ' - ' + errorMessage);
+                });
+        } else {
+            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then(userCredential => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    console.log('User logged in successfully');
+                })
+                .catch(error => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessage(errorCode + ' - ' + errorMessage);
+                    console.log(errorCode + ' - ' + errorMessage);
+                })
+        }
+
+
     }
 
     return (
@@ -27,7 +61,7 @@ const Login = () => {
                     </p>
 
                     {
-                        !isSignIn && <input type="name" placeholder="Full Name" className="w-full flex justify-center bg-transparent border border-white p-4 rounded-md text-white mb-6" />
+                        !isSignIn && <input ref = { name } type="name" placeholder="Full Name" className="w-full flex justify-center bg-transparent border border-white p-4 rounded-md text-white mb-6" />
                     }
 
                     <input type="email" ref = { email } placeholder="Email or mobile number" className="w-full flex justify-center bg-transparent border border-white p-4 rounded-md text-white" />
